@@ -44,8 +44,8 @@ CAPATH = "/etc/grid-security/certificates"
   ```
 RUCIO_ACCOUNT = "atlpan"
 RUCIO_REDIRECT_HOST = "https://rucio-lb-prod.cern.ch"
-RUCIO_AUTH_HOST = "https://voatlasrucio-auth-prod.cern.ch"
-RUCIO_SERVER_HOST = "https://voatlasrucio-server-prod.cern.ch"
+RUCIO_AUTH_HOST = "https://rucio-auth-prod.cern.ch"
+RUCIO_SERVER_HOST = "https://rucio-lb-prod.cern.ch"
   ```
 
 6. Include the filebrowser URLconf in your project urls.py like this:
