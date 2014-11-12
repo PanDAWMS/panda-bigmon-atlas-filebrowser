@@ -50,6 +50,7 @@ def index(request):
     guid = ''
     site = ''
     pattern_string='^[a-zA-Z0-9.\-_]+$'
+    pattern_site = '^[a-zA-Z0-9.,\-_]+$'
     pattern_guid='^(\{){0,1}[0-9a-zA-Z]{8}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{12}(\}){0,1}$'
     try:
         guid = request.GET['guid']
@@ -62,7 +63,7 @@ def index(request):
         pass
     try:
         site = request.GET['site']
-        if re.match(pattern_string, site) is None:
+        if re.match(pattern_site, site) is None:
             site = None
             if 'improperformat' not in errors.keys():
                 errors['improperformat'] = ''
