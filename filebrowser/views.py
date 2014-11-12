@@ -3,6 +3,7 @@
     
 """
 import logging
+import re
 from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render
@@ -48,24 +49,47 @@ def index(request):
     lfn = ''
     guid = ''
     site = ''
+    pattern_string='^[a-zA-Z0-9.\-_]+$'
+    pattern_guid='^(\{){0,1}[0-9a-zA-Z]{8}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{4}-?[0-9a-fA-F]{12}(\}){0,1}$'
     try:
         guid = request.GET['guid']
+        if re.match(pattern_guid, guid) is None:
+            guid = None
+            if 'improperformat' not in errors.keys():
+                errors['improperformat'] = ''
+            errors['improperformat'] += 'guid: %s ' % (request.GET['guid'])
     except:
         pass
     try:
         site = request.GET['site']
+        if re.match(pattern_string, site) is None:
+            site = None
+            if 'improperformat' not in errors.keys():
+                errors['improperformat'] = ''
+            errors['improperformat'] += 'site: %s ' % (request.GET['site'])
     except:
         pass
     try:
         lfn = request.GET['lfn']
+        if re.match(pattern_string, lfn) is None:
+            lfn = None
+            if 'improperformat' not in errors.keys():
+                errors['improperformat'] = ''
+            errors['improperformat'] += 'lfn: %s ' % (request.GET['lfn'])
     except:
         pass
     try:
         scope = request.GET['scope']
+        if re.match(pattern_string, scope) is None:
+            scope = None
+            if 'improperformat' not in errors.keys():
+                errors['improperformat'] = ''
+            errors['improperformat'] += 'scope: %s ' % (request.GET['scope'])
     except:
         pass
 
-    if 'missingparameter' not in errors.keys():
+    if 'missingparameter' not in errors.keys() and \
+       'improperformat' not in errors.keys():
         pfns, errtxt = get_rucio_pfns_from_guids(guids=[guid], site=[site], \
                     lfns=[lfn], scopes=[scope])
         if len(errtxt):
