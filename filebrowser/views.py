@@ -111,8 +111,9 @@ def index(request):
             _logger.warning(msg)
             errors['download'] = msg
         if len(errtxt):
-            if 'download' in errors:
-                errors['download'] += errtxt
+            if 'download' not in errors:
+                errors['download'] = ''
+            errors['download'] += errtxt
 
     ### return the file page
 
